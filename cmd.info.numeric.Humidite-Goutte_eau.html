@@ -1,7 +1,7 @@
 <div style="width:130px;min-height:90px;margin-right:10px;margin-left:10px;" class="cmd #history# tooltips cmd-widget container-fluid" data-type="info" data-subtype="numeric" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" title="#collectDate#">
     <!-- Info Widget
         Basé sur les widget de 	: 
-        Mise à jour 			: JAG 20190512: Nettoyage du code + changement position légende
+        Mise à jour 			: JAG 20190602: Ajout variable taille texte
     -->
     <div class="row">
         <div class="title #hide_name#">
@@ -16,7 +16,7 @@
                 <span class="value#id# timeCmd label label-default value"></span>
             </div>
             <!-- Historique -->
-            <div class="cmdStats #hide_history#" style="#displayHistory# font-size : 10px;text-align: left;">
+            <div class="cmdStats #hide_history# valueStats#id#" style="#displayHistory#;text-align: left;">
                 <span title="Min" style="float:left;">Min : #minHistoryValue# #unite#</span><br/>
                 <span title="Moy" style="float:left;">Moy : #averageHistoryValue# #unite#</span><br/>
                 <span title="Max" style="float:left;">Max : #maxHistoryValue# #unite#</span><br/>
@@ -26,14 +26,27 @@
     </div>
     <script>
         jeedom.cmd.update['#id#'] = function(_options){
-            var State = parseFloat(_options.display_value);
-            var Statemax = #maxValue#;
-            var height = parseInt( 80*(State/Statemax) );
-            if( height > 80) { height = 80; }
-            topPosition = 80 - height;
-            $('#recipient#id#').css({'height':height+'px','top':topPosition+'px','background-position':'0 -'+topPosition+'px'});
-            $('.cmd[data-cmd_id=#id#] .value#id#').empty().append(_options.display_value+' '+'#unite#'); 
-            $('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate+', collectée le '+_options.collectDate);		
+            // Variable Taille Texte
+                    var srcfontsize	    = '#font_size#';
+                    var srcfontsizehist = ('#font_size_hist#'!='#'+'font_size_hist#') ? "#font_size_hist#": "10px";
+            // Variable Taille Texte
+                    var State           = parseFloat(_options.display_value);
+                    var Statemax        = #maxValue#;
+                    var height          = parseInt( 80*(State/Statemax) );
+            
+            //Update
+                if( height > 80) { height = 80; }
+                topPosition = 80 - height;
+                $('#recipient#id#').css({'height':height+'px','top':topPosition+'px','background-position':'0 -'+topPosition+'px'});
+                $('.cmd[data-cmd_id=#id#] .value#id#').empty().append(_options.display_value+' '+'#unite#'); 
+                $('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate+', collectée le '+_options.collectDate);
+            //Taille Texte
+                // Taille de la valeur
+                    if (srcfontsize !="") {
+                        $('.cmd[data-cmd_id=#id#] .value#id#').css('font-size',srcfontsize);
+                    }
+                // Taille de la valeur historique
+                    $('.cmd[data-cmd_id=#id#] .valueStats#id#').css('font-size',srcfontsizehist);
         }
         jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});    
     </script>
