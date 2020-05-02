@@ -1,8 +1,9 @@
 <div style="min-width:150px;min-height:96px;" class="cmd #history# tooltips cmd-widget container-fluid" data-type="info" data-subtype="numeric" data-cmd_id="#id#" data-cmd_uid="#uid#" data-version="#version#" title="#collectDate#">
     <!-- Info Widget
-        Basé sur les widget de 	: 
-        Mise à jour 			: JAG 20190918 : Migration uniquement pour core V4
-    -->
+        Widget de           : JAG
+        Widget pour le Core : V4
+        Mise à jour         : JAG 20200502 => Ajout Version Core
+	-->
     <div class="title #hide_name#" style="width:100%">
         <div class="cmdName" style="#hideCmdName#">#name_display#</div>
     </div>
@@ -10,41 +11,53 @@
         <div style="width: 46px;height: 80px; position: absolute; z-index: 1; background: url('data/customTemplates/dashboard/cmd.action.other.Multi-action-Defaut/humidite/hu_goutteeau.png') no-repeat;background-size:46px 80px;" id="recipient#id#"></div>
         <div style="width: 46px;height: 80px; position: absolute; background: url('data/customTemplates/dashboard/cmd.action.other.Multi-action-Defaut/humidite/hu_goutteeaumask.png') no-repeat;background-size:46px 80px;" id="recipientmask#id#"></div>
     </div>
-  	<div style="display:inline-block;width:55%">
+    <div style="display:inline-block;width:55%">
         <div class="value">
             <span class="value#id# timeCmd label label-default value Stats#id#"></span>
             <!-- Historique -->
             <div class="cmdStats #hide_history# Stats_hist#id#" style="#displayHistory# text-align: left;">
-                <span title="Min" style="float:left;">Min : #minHistoryValue# #unite#</span><br/>
-                <span title="Moy" style="float:left;">Moy : #averageHistoryValue# #unite#</span><br/>
-                <span title="Max" style="float:left;">Max : #maxHistoryValue# #unite#</span><br/>
-                <i class="#tendance#"></i> 
+                <span title="Min" style="float:left;">Min : #minHistoryValue# #unite#</span><br />
+                <span title="Moy" style="float:left;">Moy : #averageHistoryValue# #unite#</span><br />
+                <span title="Max" style="float:left;">Max : #maxHistoryValue# #unite#</span><br />
+                <i class="#tendance#"></i>
             </div>
         </div>
     </div>
     <script>
-        jeedom.cmd.update['#id#'] = function(_options){
+        jeedom.cmd.update['#id#'] = function(_options) {
             // Variable Taille Texte et marge
-                    var srcFontSize     = ('#font_size#'!='#'+'font_size#') ? "#font_size#": "11px";
-                    var srcMargSize     = '#marge_size#';
-                    var srcFontSizeStat = ('#font_size_hist#'!='#'+'font_size_hist#') ? "#font_size_hist#": "10px";
+            var srcFontSize = ('#font_size#' != '#' + 'font_size#') ? "#font_size#" : "11px";
+            var srcMargSize = '#marge_size#';
+            var srcFontSizeStat = ('#font_size_hist#' != '#' + 'font_size_hist#') ? "#font_size_hist#" : "10px";
             // Variable Taille Texte
-                    var State           = parseFloat(_options.display_value);
-                    var Statemax        = #maxValue#;
-                    var height          = parseInt( 80*(State/Statemax) );
-            
+            var State = parseFloat(_options.display_value);
+            var Statemax = #maxValue #;
+            var height = parseInt(80 * (State / Statemax));
+
             //Update
-                if( height > 80) { height = 80; }
-                topPosition = 80 - height;
-                $('#recipient#id#').css({'height':height+'px','top':topPosition+'px','background-position':'0 -'+topPosition+'px'});
-                $('.cmd[data-cmd_id=#id#] .value#id#').empty().append(_options.display_value+' '+'#unite#'); 
-                $('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate+', collectée le '+_options.collectDate);
+            if (height > 80) {
+                height = 80;
+            }
+            topPosition = 80 - height;
+            $('#recipient#id#').css({
+                'height': height + 'px',
+                'top': topPosition + 'px',
+                'background-position': '0 -' + topPosition + 'px'
+            });
+            $('.cmd[data-cmd_id=#id#] .value#id#').empty().append(_options.display_value + ' ' + '#unite#');
+            $('.cmd[data-cmd_id=#id#]').attr('title', 'Valeur du ' + _options.valueDate + ', collectée le ' + _options.collectDate);
             //Taille Texte et marge pour la valeur
-                $('.cmd[data-cmd_id=#id#] .Stats#id#').css('font-size',srcFontSize);
-                $('.cmd[data-cmd_id=#id#] .Stats#id#').css('line-height',srcMargSize);
+            $('.cmd[data-cmd_id=#id#] .Stats#id#').css('font-size', srcFontSize);
+            $('.cmd[data-cmd_id=#id#] .Stats#id#').css('line-height', srcMargSize);
             //Taille Texte pour l'historique
-                $('.cmd[data-cmd_id=#id#] .Stats_hist#id#').css('font-size',srcFontSizeStat);
+            $('.cmd[data-cmd_id=#id#] .Stats_hist#id#').css('font-size', srcFontSizeStat);
         }
-        jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});    
+        jeedom.cmd.update['#id#']({
+            display_value: '#state#',
+            valueDate: '#valueDate#',
+            collectDate: '#collectDate#',
+            alertLevel: '#alertLevel#'
+        });
+
     </script>
 </div>
