@@ -2,7 +2,7 @@
     <!-- Info Widget
         Widget de           : JAG
         Widget pour le Core : V4
-        Mise à jour         : JAG 20200502 => Ajout Version Core
+        Mise à jour         : JAG 20200508 => Correction nom variable
 	-->
     <div class="title #hide_name#" style="width:100%">
         <div class="cmdName" style="#hideCmdName#">#name_display#</div>
@@ -31,7 +31,7 @@
             var srcFontSizeStat = ('#font_size_hist#' != '#' + 'font_size_hist#') ? "#font_size_hist#" : "10px";
             // Variable Taille Texte
             var State = parseFloat(_options.display_value);
-            var Statemax = #maxValue #;
+            var Statemax = #maxValue#;
             var height = parseInt(80 * (State / Statemax));
 
             //Update
